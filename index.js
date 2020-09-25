@@ -45,26 +45,38 @@ const getRGBA = e => {
     }
 
     console.log(canvasArr[0].length, canvasArr.length)
+    let mosaics = []
     for (let i =0; i<canvasArr.length;i++){
         for (let j= 0; j < canvasArr[0].length; j++){
-            new Mosaic(`${i}px`,`${j}px`,`rgba(${canvasArr[i][j].join(',')})`).draw();
+            mosaics.push(new Mosaic(`${j*10}px`,`${i*3}px`,10,3,`rgba(${canvasArr[i][j].join(',')})`))
+        }
+    }
+    
+    function drawMosaic(){
+        for(let i =0; i<mosaics.length;i++){
+            mosaics[i].draw()
         }
     }
 
+    //drawMosaic();
+    console.log(mosaics[0].draw())
+    //new Mosaic(0,0,60,20,`rgba(${canvasArr[0][0].join(',')})`).draw()
     }
 
 
 
 class Mosaic {
-    constructor(x, y,  color) {
+    constructor(x, y,width,height,color) {
         this.x = x
         this.y = y
+        this.width = width
+        this.height = height
         this.color = color
     }
 
     draw() {
         ctx.beginPath()
-        ctx.rect(this.x, this.y,60 ,20)
+        ctx.rect(this.x, this.y,this.width,this.height)
         ctx.fillStyle = this.color
         ctx.fill()
         ctx.closePath()
